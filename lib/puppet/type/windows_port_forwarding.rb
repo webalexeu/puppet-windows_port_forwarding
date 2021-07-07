@@ -28,5 +28,5 @@ Puppet::Type.newtype(:windows_port_forwarding) do
     newvalues(:v4tov4, :v6tov6, :v4tov6, :v6tov4)
     defaultto(:v4tov4)
   end
-
 end
+# EOF
