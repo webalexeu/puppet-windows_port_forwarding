@@ -76,21 +76,20 @@ Puppet::Type.type(:windows_port_forwarding).provide(:windows_port_forwarding, pa
   end
 
   def create
-    cmd = ['cmd.exe', '/c',command(:netsh), 'interface', 'portproxy', 'add', "#{@resource[:protocol]}", "listenaddress=#{@resource[:listen_on].split(':')[0]}", "listenport=#{@resource[:listen_on].split(':')[1]}", "connectaddress=#{@resource[:connect_on].split(':')[0]}", "connectport=#{@resource[:connect_on].split(':')[1]}"]
+    cmd = ['cmd.exe', '/c', command(:netsh), 'interface', 'portproxy', 'add', @resource[:protocol], "listenaddress=#{@resource[:listen_on].split(':')[0]}",
+          "listenport=#{@resource[:listen_on].split(':')[1]}", "connectaddress=#{@resource[:connect_on].split(':')[0]}", "connectport=#{@resource[:connect_on].split(':')[1]}"]
     Puppet::Util::Execution.execute(cmd)
   end
 
-
   def destroy
-    cmd = ['cmd.exe', '/c',command(:netsh), 'interface', 'portproxy', 'delete', "#{@resource[:protocol]}", "listenaddress=#{@resource[:listen_on].split(':')[0]}", "listenport=#{@resource[:listen_on].split(':')[1]}"]
+    cmd = ['cmd.exe', '/c', command(:netsh), 'interface', 'portproxy', 'delete', @resource[:protocol], "listenaddress=#{@resource[:listen_on].split(':')[0]}", "listenport=#{@resource[:listen_on].split(':')[1]}"]
     Puppet::Util::Execution.execute(cmd)
   end
 
   def flush
-    if @property_hash[:ensure] == @resource[:ensure]
-      cmd = ['cmd.exe', '/c',command(:netsh), 'interface', 'portproxy', 'set', "#{@resource[:protocol]}", "listenaddress=#{@resource[:listen_on].split(':')[0]}", "listenport=#{@resource[:listen_on].split(':')[1]}", "connectaddress=#{@resource[:connect_on].split(':')[0]}", "connectport=#{@resource[:connect_on].split(':')[1]}"]
-      Puppet::Util::Execution.execute(cmd)
-    end
+    cmd = ['cmd.exe', '/c', command(:netsh), 'interface', 'portproxy', 'set', @resource[:protocol], "listenaddress=#{@resource[:listen_on].split(':')[0]}",
+          "listenport=#{@resource[:listen_on].split(':')[1]}", "connectaddress=#{@resource[:connect_on].split(':')[0]}", "connectport=#{@resource[:connect_on].split(':')[1]}"]
+    Puppet::Util::Execution.execute(cmd) if @property_hash[:ensure] == @resource[:ensure]
   end
 
 end
