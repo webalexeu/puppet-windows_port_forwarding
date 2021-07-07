@@ -1,5 +1,5 @@
 Puppet::Type.type(:windows_port_forwarding).provide(:windows_port_forwarding, parent: Puppet::Provider) do
-  confine osfamily: windows
+  confine osfamily: 'windows'
   mk_resource_methods
   desc 'Windows Port Forwarding'
 
@@ -24,29 +24,29 @@ Puppet::Type.type(:windows_port_forwarding).provide(:windows_port_forwarding, pa
 
     raw.each_line do |line|
       next if line =~ %r{/^\s*(#|$)/}
-      if line =~ %r{/^Listen on ipv4:(.*)Connect to ipv4:$/}
+      if line =~ %r{^Listen on ipv4:(.*)Connect to ipv4:$}
         protocol = 'v4tov4'
         next
       end
-      if line =~ %r{/^Listen on ipv4:(.*)Connect to ipv6:$/}
+      if line =~ %r{^Listen on ipv4:(.*)Connect to ipv6:$}
         protocol = 'v4tov6'
         next
       end
-      if line =~ %r{/^Listen on ipv6:(.*)Connect to ipv4:$/}
+      if line =~ %r{^Listen on ipv6:(.*)Connect to ipv4:$}
         protocol = 'v6tov4'
         next
       end
-      if line =~ %r{/^Listen on ipv6:(.*)Connect to ipv6:$/}
+      if line =~ %r{^Listen on ipv6:(.*)Connect to ipv6:$}
         protocol = 'v6tov6'
         next
       end
-      if line =~ %r{/^Address(.*)$/}
+      if line =~ %r{^Address(.*)$}
         next
       end
-      if line =~ %r{/^---------------(.*)$/}
+      if line =~ %r{^---------------(.*)$}
         next
       end
-      if line =~ %r{/^(.*)?$/}
+      if line =~ %r{^(.*)?$}
         portproxy_rule = Regexp.last_match(1).split(' ')
         portproxy = {
           name:       "#{portproxy_rule[0]}:#{portproxy_rule[1]}",
