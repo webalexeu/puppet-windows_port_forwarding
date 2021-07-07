@@ -65,7 +65,7 @@ Puppet::Type.type(:windows_port_forwarding).provide(:windows_port_forwarding, pa
 
   def self.prefetch(resources)
     instances.each do |instance|
-      if resource = resources[instance.name]
+      if (resource = resources[instance.name])
         resource.provider = instance
       end
     end
