@@ -82,7 +82,8 @@ Puppet::Type.type(:windows_port_forwarding).provide(:windows_port_forwarding, pa
   end
 
   def destroy
-    cmd = ['cmd.exe', '/c', command(:netsh), 'interface', 'portproxy', 'delete', @resource[:protocol], "listenaddress=#{@resource[:listen_on].split(':')[0]}", "listenport=#{@resource[:listen_on].split(':')[1]}"]
+    cmd = ['cmd.exe', '/c', command(:netsh), 'interface', 'portproxy', 'delete', @resource[:protocol], "listenaddress=#{@resource[:listen_on].split(':')[0]}",
+           "listenport=#{@resource[:listen_on].split(':')[1]}"]
     Puppet::Util::Execution.execute(cmd)
   end
 
@@ -92,4 +93,3 @@ Puppet::Type.type(:windows_port_forwarding).provide(:windows_port_forwarding, pa
     Puppet::Util::Execution.execute(cmd) if @property_hash[:ensure] == @resource[:ensure]
   end
 end
-# EOF

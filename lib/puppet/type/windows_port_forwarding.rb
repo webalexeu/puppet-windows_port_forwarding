@@ -29,4 +29,3 @@ Puppet::Type.newtype(:windows_port_forwarding) do
     defaultto(:v4tov4)
   end
 end
-# EOF
