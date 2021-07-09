@@ -1,6 +1,6 @@
 {
   "name": "webalex-windows_port_forwarding",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "webalex",
   "summary": "Manage the windows port forwarding with Puppet",
   "license": "Apache-2.0",
