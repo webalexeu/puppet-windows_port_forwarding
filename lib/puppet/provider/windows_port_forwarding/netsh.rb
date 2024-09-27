@@ -23,27 +23,27 @@ Puppet::Type.type(:windows_port_forwarding).provide(:windows_port_forwarding, pa
     protocol = ''
 
     raw.each_line do |line|
-      next if line =~ %r{^\s*(#|$)}
-      if line =~ %r{^Listen on ipv4:(.*)Connect to ipv4:$}
+      next if %r{^\s*(#|$)}.match?(line)
+      if %r{^Listen on ipv4:(.*)Connect to ipv4:$}.match?(line)
         protocol = 'v4tov4'
         next
       end
-      if line =~ %r{^Listen on ipv4:(.*)Connect to ipv6:$}
+      if %r{^Listen on ipv4:(.*)Connect to ipv6:$}.match?(line)
         protocol = 'v4tov6'
         next
       end
-      if line =~ %r{^Listen on ipv6:(.*)Connect to ipv4:$}
+      if %r{^Listen on ipv6:(.*)Connect to ipv4:$}.match?(line)
         protocol = 'v6tov4'
         next
       end
-      if line =~ %r{^Listen on ipv6:(.*)Connect to ipv6:$}
+      if %r{^Listen on ipv6:(.*)Connect to ipv6:$}.match?(line)
         protocol = 'v6tov6'
         next
       end
-      if line =~ %r{^Address(.*)$}
+      if %r{^Address(.*)$}.match?(line)
         next
       end
-      if line =~ %r{^---------------(.*)$}
+      if %r{^---------------(.*)$}.match?(line)
         next
       end
       if line =~ %r{^(.*)?$}

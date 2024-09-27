@@ -12,14 +12,14 @@ Puppet::Type.newtype(:windows_port_forwarding) do
   newparam(:listen_on, namevar: true) do
     desc 'Specifies the IP address and port for which to listen (ip:port)'
     validate do |value|
-      raise('listen_on should be structured ip:port') if value !~ %r{^(.*):(.*)$}
+      raise('listen_on should be structured ip:port') unless %r{^(.*):(.*)$}.match?(value)
     end
   end
 
   newproperty(:connect_on) do
     desc 'Specifies the IP address and port to which to connect (ip:port)'
     validate do |value|
-      raise('listen_on should be structured ip:port') if value !~ %r{^(.*):(.*)$}
+      raise('listen_on should be structured ip:port') unless %r{^(.*):(.*)$}.match?(value)
     end
   end
 
